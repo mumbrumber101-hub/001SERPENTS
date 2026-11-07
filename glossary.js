@@ -12,6 +12,13 @@
   const normalize = text => text.normalize('NFKD').toLowerCase().replace(/[\u0300-\u036f]/g, '').replace(/[’'“”"]/g, '').replace(/[^a-z0-9]+/g, ' ').trim();
   const byId = new Map(data.map(entry => [entry.id, entry]));
   const byTerm = new Map(data.map(entry => [normalize(entry.term), entry]));
+  const shortNames = new Map();
+  for (const entry of data) {
+    const name = normalize(entry.term.replace(/\s*\([^)]*\)/g, ''));
+    if (!shortNames.has(name)) shortNames.set(name, entry);
+    else shortNames.set(name, null);
+  }
+  const resolveTerm = name => byTerm.get(normalize(name)) || shortNames.get(normalize(name));
   const searchable = data.map(entry => ({entry, name: normalize(entry.term), text: normalize(entry.term + ' ' + entry.definition)}));
   const chapterStarts = [1, 10, 23, 34, 43, 54, 67, 78, 92, 105, 115, 130, 141, 151, 166];
   const batchSize = 60;
@@ -33,7 +40,7 @@
   function definition(entry) {
     const p = document.createElement('p');
     const crossReference = entry.definition.match(/^See\s+(.+?)\.?$/i);
-    const destination = crossReference && byTerm.get(normalize(crossReference[1]));
+    const destination = crossReference && resolveTerm(crossReference[1]);
     if (destination && destination.id !== entry.id) {
       p.append('See ', link(crossReference[1].replace(/\.$/, ''), destination.id), '.');
       return p;
@@ -45,7 +52,13 @@
       p.append(entry.definition.slice(offset, match.index), '(');
       for (const part of match[1].split(/(,\s*)/)) {
         const page = Number(part.match(/^\d+/)?.[0]);
-        const end = Number(part.match(/[-–]\s*(\d+)$/)?.[1] || page);
+        const endText = part.match(/[-–]\s*(\d+)$/)?.[1];
+        let end = Number(endText || page);
+        // Bibliographic elision: 102–3 means 102–103; 148–50 means 148–150.
+        if (endText && end < page && endText.length < String(page).length) {
+          end = Number(String(page).slice(0, -endText.length) + endText);
+          if (end < page) end += 10 ** endText.length;
+        }
         const chapter = chapterFor(page);
         if (chapter && end <= 166 && end >= page) {
           const a = link(part, chapter.id, 'glossary-page');
