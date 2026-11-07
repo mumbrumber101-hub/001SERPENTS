@@ -1,0 +1,50 @@
+/* The complete glossary shares the guide's parchment, ink and Cinzel headings. */
+#glossary .glossary-intro { color: var(--ink); font-size: 1.12rem; line-height: 1.65; margin-bottom: 24px; }
+#glossary .glossary-intro p + p { margin-top: 10px; }
+#glossary a { text-decoration: none; }
+#glossary .glossary-intro a, #glossary .glossary-entry a, #glossary .glossary-back { color: #075a4c; }
+#glossary .glossary-controls { padding: 22px; background: #faf6ee; border: 1px solid #b8aa8c; border-radius: 3px; }
+#glossary .glossary-label { display: block; font-family: 'Cinzel', serif; font-size: .95rem; font-weight: 600; margin-bottom: 10px; color: var(--ink); }
+#glossary .glossary-search-row { display: flex; gap: 10px; }
+#glossary-search { width: 100%; min-width: 0; border: 1px solid #998b71; border-radius: 2px; padding: 12px; font: inherit; font-size: 1.12rem; color: var(--ink); background: white; }
+#glossary-search::placeholder { color: #756a57; }
+#glossary button { cursor: pointer; font-family: inherit; font-size: 1rem; }
+#glossary .glossary-clear, #glossary .glossary-more, #glossary .glossary-reset { border: 1px solid #786c56; border-radius: 2px; color: #153e36; background: #f5efe2; padding: 10px 16px; }
+#glossary .glossary-hint { font-size: .95rem; color: #5c5141; margin-top: 9px; line-height: 1.45; }
+#glossary .glossary-alphabet { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 18px; }
+#glossary .glossary-alphabet button { min-width: 36px; min-height: 40px; padding: 7px; background: transparent; border: 1px solid #c2b59b; color: #244c42; border-radius: 2px; }
+#glossary .glossary-alphabet button:first-child { min-width: 48px; }
+#glossary .glossary-alphabet button[aria-pressed="true"] { background: #17594b; border-color: #17594b; color: #fffaf0; }
+#glossary .glossary-alphabet button:disabled { opacity: .45; cursor: default; }
+#glossary .glossary-popular { display: flex; flex-wrap: wrap; gap: 6px 16px; margin-top: 16px; font-size: 1rem; line-height: 1.5; }
+#glossary .glossary-popular a { color: #075a4c; }
+#glossary .glossary-results-top { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; padding: 24px 0 12px; border-bottom: 1px solid #b9aa8d; }
+#glossary-status { color: #514431; line-height: 1.5; font-size: 1rem; }
+#glossary .glossary-entry { scroll-margin-top: 20px; padding: 24px 0; border-bottom: 1px solid #c5b89f; color: var(--ink); overflow-wrap: anywhere; }
+#glossary .glossary-entry:target { background: rgba(255, 255, 255, .28); }
+#glossary .glossary-entry h3 { font-family: 'Cinzel', serif; font-weight: 600; font-size: 1.08rem; line-height: 1.5; margin-bottom: 9px; }
+#glossary .glossary-entry h3 a { color: #772433; }
+#glossary .glossary-entry p { font-size: 1.12rem; line-height: 1.7; }
+#glossary .glossary-entry .glossary-entry-tools { font-size: .9rem; margin-top: 11px; color: #64543e; }
+#glossary .glossary-page { white-space: nowrap; }
+#glossary .glossary-empty { padding: 28px 0; font-size: 1.12rem; line-height: 1.6; }
+#glossary .glossary-more { display: block; width: 100%; margin: 24px 0; }
+#glossary [hidden] { display: none !important; }
+#glossary-key-terms { border-top: 2px solid #ad9872; margin-top: 42px; padding-top: 26px; scroll-margin-top: 20px; }
+#glossary-key-terms > h3 { font: 600 1.25rem/1.5 'Cinzel', serif; color: var(--blood); margin-bottom: 8px; }
+#glossary-key-terms > p { margin-bottom: 24px; font-size: 1.08rem; line-height: 1.6; }
+#glossary .glossary-curated-link { display: inline-block; margin-top: 10px; font-size: .95rem; color: #075a4c; }
+#glossary :is(a, button, input):focus-visible { outline: 3px solid #17594b; outline-offset: 4px; }
+@media (hover: hover) { #glossary a:hover { color: #772433; } #glossary button:not(:disabled):hover { box-shadow: 0 0 0 1px #17594b; } }
+@media (max-width: 500px) {
+  #glossary .glossary-controls { padding: 16px; }
+  #glossary .glossary-search-row { gap: 6px; }
+  #glossary .glossary-clear { padding: 10px; }
+  #glossary .glossary-entry { padding: 20px 0; }
+  #glossary .glossary-alphabet { gap: 5px; }
+  #glossary .glossary-alphabet button { min-width: 36px; min-height: 42px; }
+}
+@media print {
+  #glossary .glossary-controls, #glossary .glossary-more, #glossary .glossary-reset, #glossary .glossary-entry-tools { display: none !important; }
+  #glossary .glossary-entry { break-inside: avoid; }
+}
